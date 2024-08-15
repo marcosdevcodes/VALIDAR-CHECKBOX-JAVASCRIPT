@@ -1,0 +1,85 @@
+body{
+    background: #333;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+form{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+}
+.pill{
+    padding: .75em;
+    border-radius: 30px;
+    border: 2px solid #fff;
+    background: #262626;
+    position: relative;
+
+    overflow: hidden;
+    /*Esse overflow: hidden aqui é para o elemento 
+    do .pill::before ficar dentro dele centralizado
+    e não sair para fora devido o position absolute
+    do before*/
+    
+    user-select: none;/*Esse user-select none a 
+    pessoa não consegue mais selecionar o texto 
+    que esta dentro do span*/
+    
+    /* transition: all .5s ease-in-out; */
+}
+.pill::before{
+    content: "";
+    position: absolute;
+    inset: 0;/* é o mesmo que colocar top: 0; right: 0; left: 0; bottom: 0; */
+    width: 100%;
+    background-color: var(--bg-color);
+    z-index: 1;
+    transition: transform .3s ease-in-out;
+    transform: translateX(-100%);/*aqui ele ocupa o 
+    tamanho do elemento na horizontal como ele esta 
+    -100% ele fica todo fora do elemento*/
+
+    /* transition: all .3s ease-in-out; */
+}
+
+/*Quando ele estiver checado a cor de fundo do before
+vai aparecer 100% no elemento*/
+.pill:has(:checked)::before{
+    transform: translateX(0);
+}
+
+/* Estou selecionando a cllas pill que tenha dentro 
+dela um elemento focus atravez do pseudoclass :has() */
+.pill:has(:focus){
+    outline: 2px solid #ff0000;
+    outline-offset: 2px;/*Para destanciar o outline 
+    da borda ou seja destanciar quando for clicado a 
+    borda*/
+    /*Esse outline-offset serve para pessoas 
+    deficiente quando forem navegar no site atravez 
+    da tecla tab no teclado */
+}
+/* Formatar o checkbox atravez do :has()*/
+.pill:has(:checked){
+    background: #000000;
+}
+
+.pill span{
+    /* Se não colocar o z-index junto com position
+    relativer os nomes não vão aparecer por q o 
+    before esta com position absolute*/
+    z-index: 1;
+    position: relative;
+}
+
+form .sr-only{
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+}
